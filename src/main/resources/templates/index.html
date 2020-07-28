@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="eng">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Homepage for CSGOEmpire Bot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#" th:href="@{/}">radswn's CSGOEmpire Bot</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLast" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Show bets from last
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#" th:href="@{/last/hour/0}">Hour</a>
+                    <a class="dropdown-item" href="#" th:href="@{/last/8hours/0}">8 Hours</a>
+                    <a class="dropdown-item" href="#" th:href="@{/last/day/0}">Day</a>
+                    <a class="dropdown-item" href="#" th:href="@{/last/week/0}">Week</a>
+                    <a class="dropdown-item" href="#" th:href="@{/last/month/0}">Month</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/all/0}">Show bets from all-time<span
+                        class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <a class="btn btn-danger" href="#" th:href="@{/end}" role="button">Stop the Bot</a>
+    </div>
+</nav>
+<div th:unless="${bets.isEmpty()}">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Time</th>
+            <th scope="col">Date</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Balance</th>
+            <th scope="col">Bet on</th>
+            <th scope="col">Roll result</th>
+            <th scope="col">Bet result</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="betDto: ${bets}" th:object="${betDto}">
+            <th scope="row" th:text="*{id}">1</th>
+            <td th:text="*{time}">9:50:13</td>
+            <td th:text="*{date}">21-07-2020</td>
+            <td th:text="*{amount}">0.1</td>
+            <td th:text="*{currentBalance}">60.00</td>
+            <td th:text="*{betSide}">ct</td>
+            <td th:text="*{result}">t</td>
+            <td th:if="${betDto.win.length()} < 4" style="color:limegreen" th:text="*{win}">win</td>
+            <td th:if="${betDto.win.length()} > 3" style="color:indianred" th:text="*{win}">lose</td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+</html>
